@@ -207,6 +207,16 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 
 .container{max-width:1200px; margin:0 auto;}
 
+#fiber-plans, #home-net{margin-top:20px;}
+.sub-head{max-width:640px; margin:0 auto 40px; text-align:center;}
+.sub-eyebrow{
+  display:inline-block; font-size:10.5px; letter-spacing:2.5px; text-transform:uppercase; color:var(--grey);
+  border:1px solid var(--line); padding:5px 12px; border-radius:20px; margin-bottom:16px;
+}
+.sub-head h3{font-family:'Space Grotesk'; font-size:clamp(22px,3.2vw,30px); font-weight:700; letter-spacing:-.5px;}
+.sub-head p{color:var(--grey); margin-top:12px; font-size:14.5px; line-height:1.7;}
+.pulse-divider-small{height:70px; margin:16px 0 8px;}
+
 /* ================= FIBER PLAN CARDS ================= */
 .plan-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:16px;}
 .plan-card{
@@ -267,12 +277,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .frame-label .d{width:6px; height:6px; border-radius:50%; background:#fff; animation:blink 1.6s infinite;}
 .coverage-copy h3{font-family:'Space Grotesk'; font-size:30px; margin-bottom:16px; letter-spacing:-1px;}
 .coverage-copy p{color:var(--grey); line-height:1.75; margin-bottom:22px; font-size:15px;}
-.region-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;}
-.region-tags span{
-  font-size:12px; border:1px solid var(--line); padding:7px 13px; border-radius:20px; color:var(--grey);
-  transition:.3s;
-}
-.region-tags span:hover{border-color:var(--white); color:var(--white);}
+.region-list{font-size:13.5px; color:var(--grey-dim); line-height:1.9; margin-bottom:28px;}
 
 /* ================= MOBILE TABS ================= */
 .tabs{display:flex; gap:8px; justify-content:center; margin-bottom:44px; flex-wrap:wrap;}
@@ -286,23 +291,31 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .tab-panel.active{display:block; animation:fadeUp .5s var(--ease);}
 @keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
 
-.data-table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:var(--radius);}
-.data-table thead th{
-  text-align:left; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey);
-  padding:14px 16px; border-bottom:1px solid var(--line); font-weight:500;
+/* Plan tables are built from CSS-grid rows (not <table>) so header and data
+   columns share one grid-template-columns and can never drift out of alignment. */
+.plan-table{width:100%;}
+.ptable-inner{min-width:820px;}
+.ptable-row{
+  display:grid;
+  grid-template-columns: 1.35fr 0.95fr 1.9fr 0.85fr 0.55fr 0.55fr 0.95fr;
+  align-items:center; column-gap:14px; padding:16px 18px; position:relative;
 }
-.data-table tbody tr{
-  position:relative; border-bottom:1px solid var(--line-soft); transition:background .3s;
+.ptable-row + .ptable-row{border-top:1px solid var(--line-soft);}
+.ptable-row.head{
+  font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey);
+  border-bottom:1px solid var(--line); padding:14px 18px;
 }
-.data-table tbody tr:hover{background:var(--panel);}
-.data-table tbody tr::before{
+.ptable-row:not(.head){transition:background .3s;}
+.ptable-row:not(.head):hover{background:var(--panel);}
+.ptable-row:not(.head)::before{
   content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:linear-gradient(90deg, rgba(255,255,255,.06), transparent);
-  transition:width .5s var(--ease);
+  transition:width .5s var(--ease); pointer-events:none;
 }
-.data-table tbody tr:hover::before{width:100%;}
-.data-table td{padding:16px; font-size:14px; position:relative; z-index:1;}
-.data-table td.plan-cell{font-family:'Space Grotesk'; font-weight:600; font-size:15px;}
-.data-table td.price-cell{font-family:'JetBrains Mono'; font-weight:600;}
+.ptable-row:not(.head):hover::before{width:100%;}
+.pcell{font-size:14px; position:relative; z-index:1; min-width:0;}
+.pcell.plan{font-family:'Space Grotesk'; font-weight:600; font-size:15px;}
+.pcell.price{font-family:'JetBrains Mono'; font-weight:600;}
+.pcell:nth-child(5), .pcell:nth-child(6){text-align:center;}
 .tick{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;}
 .tick.yes svg{stroke:var(--white);}
 .tick.no{color:var(--grey-dim); font-size:14px;}
@@ -381,10 +394,9 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
   </a>
   <nav class="links" id="navLinks">
     <div id="navPill"></div>
-    <a href="#fiber" data-nav>Fiber</a>
-    <a href="#home-net" data-nav>Home Internet</a>
-    <a href="#coverage" data-nav>Coverage</a>
+    <a href="#home-internet" data-nav>Home Internet</a>
     <a href="#mobile" data-nav>Mobile Data</a>
+    <a href="#coverage" data-nav>Coverage Zones</a>
   </nav>
   <a href="#coverage" class="nav-cta">
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -399,10 +411,9 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
   <div class="close" id="mmenuClose">
     <svg width="16" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.8"/></svg>
   </div>
-  <a href="#fiber">Fiber</a>
-  <a href="#home-net">Home Internet</a>
-  <a href="#coverage">Coverage</a>
+  <a href="#home-internet">Home Internet</a>
   <a href="#mobile">Mobile Data</a>
+  <a href="#coverage">Coverage Zones</a>
 </div>
 
 <!-- ============ HERO ============ -->
@@ -416,8 +427,8 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     </h1>
     <p class="hero-sub">Fiber, 5G home internet and mobile data built for every coast, creek and corner of Guyana. No throttling. No fine print. Just signal.</p>
     <div class="hero-actions">
-      <a href="#fiber" class="btn btn-solid">
-        Explore fiber plans
+      <a href="#home-internet" class="btn btn-solid">
+        Explore home internet
         <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="#coverage" class="btn btn-ghost">
@@ -440,41 +451,42 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
   </svg>
 </div>
 
-<!-- ============ FIBER ============ -->
-<section id="fiber">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="tag">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/></svg>
-        Our Fiber Plans
-      </div>
-      <h2>Fiber to the home.<br>Actually unlimited.</h2>
-      <p>Symmetrical speeds on every tier from Fiber 1G up. Pick a plan by what you actually do online — the bar below shows real headroom.</p>
-    </div>
-
-    <div class="plan-grid reveal-stagger" id="fiberGrid"></div>
-  </div>
-</section>
-
-<div class="pulse-divider" data-pulse>
-  <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-    <path d="M0,60 L500,60 L525,90 L550,30 L575,60 L900,60 L925,15 L950,105 L975,60 L1200,60" />
-    <path class="active-line" d="M0,60 L500,60 L525,90 L550,30 L575,60 L900,60 L925,15 L950,105 L975,60 L1200,60" />
-  </svg>
-</div>
-
-<!-- ============ HOME 4G/5G ============ -->
-<section id="home-net">
+<!-- ============ HOME INTERNET (Fiber + 4G/5G) ============ -->
+<section id="home-internet">
   <div class="container">
     <div class="section-head reveal">
       <div class="tag">
         <svg viewBox="0 0 24 24" fill="none"><path d="M2 8.5C8 3 16 3 22 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M5.5 12.2C9.7 8.6 14.3 8.6 18.5 12.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 15.8C11 14 13 14 15 15.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="19.2" r="1.3" fill="currentColor"/></svg>
-        4G/5G Home Internet
+        Home Internet
       </div>
-      <h2>No fiber line yet?<br>Your router just went 5G.</h2>
-      <p>Plug-and-play wireless home internet for areas fiber hasn't reached — same WazyOS reliability, zero digging up your yard.</p>
+      <h2>Fiber where it's run.<br>5G where it isn't.</h2>
+      <p>Two ways into your home, one WazyOS network. Symmetrical fiber for the fastest connection on the coast, or plug-and-play wireless where the cables haven't reached yet.</p>
     </div>
-    <div class="home-grid reveal-stagger" id="homeGrid"></div>
+
+    <div id="fiber-plans">
+      <div class="sub-head reveal">
+        <span class="sub-eyebrow">Fiber</span>
+        <h3>Fiber to the home. Actually unlimited.</h3>
+        <p>Symmetrical speeds on every tier from Fiber 1G up. Pick a plan by what you actually do online — the bar below shows real headroom.</p>
+      </div>
+      <div class="plan-grid reveal-stagger" id="fiberGrid"></div>
+    </div>
+
+    <div class="pulse-divider pulse-divider-small" data-pulse>
+      <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+        <path d="M0,45 L300,45 L320,15 L340,75 L360,45 L1200,45" />
+        <path class="active-line" d="M0,45 L300,45 L320,15 L340,75 L360,45 L1200,45" />
+      </svg>
+    </div>
+
+    <div id="home-net">
+      <div class="sub-head reveal">
+        <span class="sub-eyebrow">4G/5G Home Internet</span>
+        <h3>No fiber line yet? Your router just went 5G.</h3>
+        <p>Plug-and-play wireless home internet for areas fiber hasn't reached — same WazyOS reliability, zero digging up your yard.</p>
+      </div>
+      <div class="home-grid reveal-stagger" id="homeGrid"></div>
+    </div>
   </div>
 </section>
 
@@ -491,7 +503,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     <div class="section-head reveal">
       <div class="tag">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.4"/></svg>
-        Coverage Map
+        Coverage Zones
       </div>
       <h2>Is WazyOS live on your street?</h2>
       <p>Drop a pin, zoom in on your area, see what's already lit up — full interactive map is one click away.</p>
@@ -506,11 +518,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <div class="coverage-copy">
         <h3>Search your address on the full map</h3>
         <p>Our preview above is scrollable and live — but for address-level lookup, driveway pins and build-out timelines, open the full coverage tool.</p>
-        <div class="region-tags">
-          <span>Georgetown</span><span>East Bank Demerara</span><span>East Coast Demerara</span>
-          <span>Linden</span><span>New Amsterdam</span><span>Berbice</span><span>Essequibo Coast</span>
-          <span>Bartica</span><span>Anna Regina</span><span>Diamond</span>
-        </div>
+        <p class="region-list">Georgetown, East Bank Demerara, East Coast Demerara, Linden, New Amsterdam, Berbice, Essequibo Coast, Bartica, Anna Regina, Diamond.</p>
         <a href="https://gttriculture-cloud.github.io/WazyOS-CoverageMap/" target="_blank" rel="noopener" class="btn btn-solid">
           Open full coverage map
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -536,7 +544,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
         Mobile Data Plans
       </div>
       <h2>SIM plans that scale<br>with how loud your month gets.</h2>
-      <p>From a one-day top-up to genuinely unlimited. Every plan rides on 5G where it's live.</p>
+      <p>From a one-day top-up to genuinely unlimited. Every plan rides on 4G and 5G where it's live, with full VoLTE and VoNR calling built in — and works on physical SIM or eSIM the moment your device is unlocked.</p>
     </div>
 
     <div class="tabs" id="tabBar">
@@ -547,17 +555,17 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
 
     <div class="tab-panel active" id="tab-prepaid">
       <div class="table-scroll">
-        <table class="data-table" id="table-prepaid"></table>
+        <div class="plan-table" id="table-prepaid"></div>
       </div>
     </div>
     <div class="tab-panel" id="tab-thirty">
       <div class="table-scroll">
-        <table class="data-table" id="table-thirty"></table>
+        <div class="plan-table" id="table-thirty"></div>
       </div>
     </div>
     <div class="tab-panel" id="tab-ninety">
       <div class="table-scroll">
-        <table class="data-table" id="table-ninety"></table>
+        <div class="plan-table" id="table-ninety"></div>
       </div>
       <div class="roam-banner reveal">
         <h4 class="display">Roaming</h4>
@@ -625,13 +633,13 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     </div>
     <div class="footer-col">
       <h5>Plans</h5>
-      <a href="#fiber">Fiber</a>
-      <a href="#home-net">Home Internet</a>
+      <a href="#fiber-plans">Fiber</a>
+      <a href="#home-net">4G/5G Home Internet</a>
       <a href="#mobile">Mobile Data</a>
     </div>
     <div class="footer-col">
       <h5>Company</h5>
-      <a href="#coverage">Coverage Map</a>
+      <a href="#coverage">Coverage Zones</a>
       <a href="#top">WazyOS Group</a>
       <a href="#mobile">Roaming (soon)</a>
     </div>
@@ -649,46 +657,50 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
 </footer>
 
 <script>
+/* ============ HELPERS ============ */
+function roundTo20(n){ return Math.round(n/20)*20; }
+function gyd(n){ return roundTo20(n).toLocaleString(); }
+
 /* ============ DATA ============ */
 const fiberPlans = [
-  {name:"Fiber 100", down:100, up:50, price:"6,499"},
-  {name:"Fiber 300", down:300, up:150, price:"8,999"},
-  {name:"Fiber 500", down:500, up:250, price:"10,999"},
-  {name:"Fiber 1G", down:1000, up:1000, price:"17,999"},
-  {name:"Fiber 2G", down:2000, up:2000, price:"24,999"},
-  {name:"Fiber 4G", down:4000, up:4000, price:"39,999", featured:true},
-  {name:"Fiber 8G", down:8000, up:8000, price:"69,999"},
+  {name:"Fiber 100", down:100, up:50, price:6499},
+  {name:"Fiber 300", down:300, up:150, price:8999},
+  {name:"Fiber 500", down:500, up:250, price:10999},
+  {name:"Fiber 1G", down:1000, up:1000, price:17999},
+  {name:"Fiber 2G", down:2000, up:2000, price:24999},
+  {name:"Fiber 4G", down:4000, up:4000, price:39999, featured:true},
+  {name:"Fiber 8G", down:8000, up:8000, price:69999},
 ];
 const homePlans = [
-  {name:"Home 20", network:"4G/5G", speed:20, price:"5,999"},
-  {name:"Home 50", network:"4G/5G", speed:50, price:"7,499"},
-  {name:"Home 100", network:"5G", speed:100, price:"8,999", featured:true, badge:"⭐"},
+  {name:"Home 20", network:"4G/5G", down:20, up:10, price:5999},
+  {name:"Home 50", network:"4G/5G", down:50, up:25, price:7499},
+  {name:"Home 100", network:"5G", down:100, up:50, price:8999, featured:true, badge:"⭐"},
 ];
 const mobilePrepaid = {
   headers:["Plan","Validity","Data","Voice / SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Quick 1","1 day","5 GB","10 min / SMS",1,0,"300"],
-    ["Quick 7","7 days","15 GB","30 min / SMS",1,0,"760"],
-    ["Weekly Max","7 days","30 GB","60 min / SMS",1,0,"1,260"],
+    ["Quick 1","1 day","5 GB","10 min / SMS",1,0,300],
+    ["Quick 7","7 days","15 GB","30 min / SMS",1,0,760],
+    ["Weekly Max","7 days","30 GB","60 min / SMS",1,0,1260],
   ]
 };
 const mobileThirty = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Connect 15","15 GB","100 min","100",1,0,"1,500"],
-    ["Connect 30","30 GB","200 min","200",1,0,"2,260"],
-    ["Connect 60","60 GB","300 min","300",1,0,"3,260"],
-    ["Connect 100 ⭐","100 GB","500 min","500",1,0,"4,000"],
-    ["Connect 150 ⭐","150 GB","Unlimited on-net + 600 off-net","600",1,1,"5,000"],
-    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,"6,500"],
-    ["Connect 500 👑","500 GB","Unlimited local","Unlimited",1,1,"8,000"],
+    ["Connect 15","15 GB","100 min","100",1,0,1500],
+    ["Connect 30","30 GB","200 min","200",1,0,2260],
+    ["Connect 60","60 GB","300 min","300",1,0,3260],
+    ["Connect 100 ⭐","100 GB","500 min","500",1,0,4000],
+    ["Connect 150 ⭐","150 GB","Unlimited on-net + 600 off-net","600",1,1,5000],
+    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,6500],
+    ["Connect 500 👑","500 GB","Unlimited local","Unlimited",1,1,8000],
   ]
 };
 const mobileNinety = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,"9,000"],
-    ["Insane Unlimited","Unlimited","Unlimited local","Unlimited",1,1,"12,000"],
+    ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,9000],
+    ["Insane Unlimited","Unlimited","Unlimited local","Unlimited",1,1,12000],
   ]
 };
 
@@ -705,7 +717,7 @@ fiberPlans.forEach(p=>{
   card.innerHTML = `
     ${p.featured ? '<div class="badge">🔥</div>' : ''}
     <div class="plan-name">${p.name}</div>
-    <div class="plan-price mono">$${p.price}<sup>GYD / mo</sup></div>
+    <div class="plan-price mono">$${gyd(p.price)}<sup>GYD / mo</sup></div>
     <div class="speed-row"><span>Speed headroom</span><span>${p.down} Mbps</span></div>
     <div class="speed-bar-track"><div class="speed-bar-fill" data-pct="${pct}"></div></div>
     <div class="plan-meta">
@@ -719,46 +731,46 @@ fiberPlans.forEach(p=>{
 
 /* ============ RENDER HOME 4G/5G ============ */
 const homeGrid = document.getElementById('homeGrid');
-const maxHome = Math.max(...homePlans.map(p=>p.speed));
+const maxHome = Math.max(...homePlans.map(p=>p.down));
 homePlans.forEach(p=>{
-  const pct = Math.round((p.speed/maxHome)*100);
+  const pct = Math.round((p.down/maxHome)*100);
   const card = document.createElement('div');
   card.className = 'plan-card' + (p.featured ? ' featured' : '');
   card.innerHTML = `
     ${p.badge ? `<div class="badge">${p.badge}</div>` : ''}
     <div class="plan-name">${p.name}</div>
-    <div class="plan-price mono">$${p.price}<sup>GYD / mo</sup></div>
-    <div class="speed-row"><span>${p.network}</span><span>${p.speed} Mbps</span></div>
+    <div class="plan-price mono">$${gyd(p.price)}<sup>GYD / mo</sup></div>
+    <div class="speed-row"><span>${p.network}</span><span>${p.down} Mbps</span></div>
     <div class="speed-bar-track"><div class="speed-bar-fill" data-pct="${pct}"></div></div>
     <div class="plan-meta">
-      <div><div class="mv mono">${p.network}</div><div class="ml">Network</div></div>
-      <div><div class="mv mono">${p.speed} Mbps</div><div class="ml">Down</div></div>
+      <div><div class="mv mono">${p.down.toLocaleString()}</div><div class="ml">Download</div></div>
+      <div><div class="mv mono">${p.up.toLocaleString()}</div><div class="ml">Upload</div></div>
     </div>
     <button class="plan-cta">Choose ${p.name} <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   `;
   homeGrid.appendChild(card);
 });
 
-/* ============ RENDER MOBILE TABLES ============ */
-function renderTable(elId, dataset){
+/* ============ RENDER MOBILE PLAN GRIDS (CSS grid rows — guarantees column alignment) ============ */
+function renderPlanGrid(elId, dataset){
   const el = document.getElementById(elId);
-  const thead = `<thead><tr>${dataset.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>`;
-  const tbody = `<tbody>${dataset.rows.map(r=>{
-    return `<tr>
-      <td class="plan-cell">${r[0]}</td>
-      <td class="mono">${r[1]}</td>
-      <td>${r[2]}</td>
-      <td>${r[3]}</td>
-      <td>${r[4] ? tickYes : tickNo}</td>
-      <td>${r[5] ? tickYes : tickNo}</td>
-      <td class="price-cell">$${r[6]}</td>
-    </tr>`;
-  }).join('')}</tbody>`;
-  el.innerHTML = thead + tbody;
+  const head = `<div class="ptable-row head">${dataset.headers.map(h=>`<div class="pcell">${h}</div>`).join('')}</div>`;
+  const rows = dataset.rows.map(r=>{
+    return `<div class="ptable-row">
+      <div class="pcell plan">${r[0]}</div>
+      <div class="pcell mono">${r[1]}</div>
+      <div class="pcell">${r[2]}</div>
+      <div class="pcell">${r[3]}</div>
+      <div class="pcell">${r[4] ? tickYes : tickNo}</div>
+      <div class="pcell">${r[5] ? tickYes : tickNo}</div>
+      <div class="pcell price">$${gyd(r[6])}</div>
+    </div>`;
+  }).join('');
+  el.innerHTML = `<div class="ptable-inner">${head}${rows}</div>`;
 }
-renderTable('table-prepaid', mobilePrepaid);
-renderTable('table-thirty', mobileThirty);
-renderTable('table-ninety', mobileNinety);
+renderPlanGrid('table-prepaid', mobilePrepaid);
+renderPlanGrid('table-thirty', mobileThirty);
+renderPlanGrid('table-ninety', mobileNinety);
 
 /* ============ TABS ============ */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -810,7 +822,7 @@ updateProgress(); drawPulses();
 /* ============ NAV SCROLLSPY + PILL ============ */
 const navLinks = document.querySelectorAll('#navLinks a[data-nav]');
 const navPill = document.getElementById('navPill');
-const sections = ['fiber','home-net','coverage','mobile'].map(id=>document.getElementById(id));
+const sections = ['home-internet','mobile','coverage'].map(id=>document.getElementById(id));
 
 function movePill(link){
   if(!link) { navPill.style.width='0'; return; }
