@@ -251,7 +251,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .plan-cta svg{width:14px; height:14px;}
 
 /* ================= HOME 4G/5G ================= */
-.home-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;}
+.home-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;}
 
 /* ================= COVERAGE ================= */
 .coverage-wrap{
@@ -259,9 +259,9 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 }
 .map-frame{
   position:relative; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
-  aspect-ratio:2.5/1; width:100%; background:var(--panel);
+  aspect-ratio:2.8/1; width:100%; background:var(--panel);
 }
-@media(max-width:700px){.map-frame{aspect-ratio:4/3;}}
+@media(max-width:700px){.map-frame{aspect-ratio:16/10;}}
 .map-frame iframe{width:100%; height:100%; border:0; filter:grayscale(.15) contrast(1.05);}
 .map-frame .scan{
   position:absolute; left:0; right:0; height:120px; pointer-events:none;
@@ -279,6 +279,17 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .coverage-copy h3{font-family:'Space Grotesk'; font-size:30px; margin-bottom:16px; letter-spacing:-1px;}
 .coverage-copy p{color:var(--grey); line-height:1.75; margin-bottom:22px; font-size:15px;}
 .region-list{font-size:13.5px; color:var(--grey-dim); line-height:1.9; margin-bottom:28px;}
+.coverage-divider{
+  display:flex; align-items:center; gap:18px; max-width:640px; margin:8px auto 0; color:var(--grey);
+}
+.coverage-divider .ln{flex:1; height:1px; background:var(--line);}
+.coverage-divider span{font-size:11px; letter-spacing:2px; text-transform:uppercase; white-space:nowrap;}
+.tower-callout{
+  max-width:640px; margin:0 auto; text-align:center; border:1px solid var(--line); border-radius:var(--radius);
+  padding:30px 28px; background:var(--panel);
+}
+.tower-callout h3{font-family:'Space Grotesk'; font-size:24px; margin-bottom:12px; letter-spacing:-.5px;}
+.tower-callout p{color:var(--grey); line-height:1.75; font-size:14.5px;}
 
 /* ================= MOBILE TABS ================= */
 .tabs{display:flex; gap:8px; justify-content:center; margin-bottom:44px; flex-wrap:wrap;}
@@ -323,6 +334,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
   width:14px; height:14px; border:1px solid var(--grey-dim); border-radius:50%;
   font-size:9px; line-height:1; color:var(--grey); cursor:help; flex-shrink:0;
   text-transform:none; letter-spacing:normal; font-family:'Inter',sans-serif;
+  background:var(--black); isolation:isolate;
 }
 .info-dot:hover, .info-dot:focus{border-color:var(--white); color:var(--white); outline:none;}
 .tooltip-box{
@@ -484,7 +496,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
         Home Internet
       </div>
       <h2>Fiber where it's run.<br>5G where it isn't.</h2>
-      <p>Two ways into your home, one WazyOS network. Symmetrical fiber for the fastest connection on the coast, or plug-and-play wireless where the cables haven't reached yet.</p>
+      <p>Two ways into your home, one WazyOS network. Symmetrical fiber for the fastest connection on the coast, or plug-and-play 5G wireless with ultra-low latency where the cables haven't reached yet.</p>
     </div>
 
     <div id="fiber-plans">
@@ -507,7 +519,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <div class="sub-head reveal">
         <span class="sub-eyebrow">4G/5G Home Internet</span>
         <h3>No fiber line yet? Your router just went 5G.</h3>
-        <p>Plug-and-play wireless home internet for areas fiber hasn't reached — same WazyOS reliability, zero digging up your yard.</p>
+        <p>Plug-and-play wireless home internet for areas fiber hasn't reached — same WazyOS reliability, ultra-low latency, zero digging up your yard.</p>
       </div>
       <div class="home-grid reveal-stagger" id="homeGrid"></div>
     </div>
@@ -535,16 +547,38 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
 
     <div class="coverage-wrap reveal">
       <div class="map-frame">
-        <div class="frame-label"><span class="d"></span> LIVE COVERAGE PREVIEW</div>
+        <div class="frame-label"><span class="d"></span> LIVE FIBER COVERAGE PREVIEW</div>
         <div class="scan"></div>
-        <iframe src="https://gttriculture-cloud.github.io/WazyOS-CoverageMap/" loading="lazy" title="WazyOS coverage map preview"></iframe>
+        <iframe src="https://gttriculture-cloud.github.io/WazyOS-CoverageMap/" loading="lazy" title="WazyOS fiber coverage map preview"></iframe>
       </div>
       <div class="coverage-copy">
-        <h3>Search your address on the full map</h3>
-        <p>Our preview above is scrollable and live — but for address-level lookup, driveway pins and build-out timelines, open the full coverage tool.</p>
+        <h3>Search your address on the full fiber map</h3>
+        <p>Our preview above is scrollable and live — but for address-level lookup, driveway pins and build-out timelines, open the full fiber coverage tool.</p>
         <p class="region-list">Georgetown, East Bank Demerara, East Coast Demerara, Linden, New Amsterdam, Berbice, Essequibo Coast, Bartica, Anna Regina, Diamond.</p>
         <a href="https://gttriculture-cloud.github.io/WazyOS-CoverageMap/" target="_blank" rel="noopener" class="btn btn-solid">
-          Open full coverage map
+          Open full fiber coverage map
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="coverage-divider"><span class="ln"></span><span>No fiber nearby?</span><span class="ln"></span></div>
+
+      <div class="tower-callout">
+        <h3>Fiber not in your area?</h3>
+        <p>Check to see if a tower is nearby for a 4G/5G Home Internet plan — same WazyOS reliability and ultra-low latency, no cable required.</p>
+        <p>Our 4G and 4G+ services for mobile data are available nationwide — check to see if there's a 5G tower nearby as well using the map below.</p>
+      </div>
+
+      <div class="map-frame">
+        <div class="frame-label"><span class="d"></span> LIVE TOWER COVERAGE PREVIEW</div>
+        <div class="scan"></div>
+        <iframe src="https://gttriculture-cloud.github.io/WazyOS-TowerCoverage/" loading="lazy" title="WazyOS tower coverage map preview"></iframe>
+      </div>
+      <div class="coverage-copy">
+        <h3>Search your address on the full tower map</h3>
+        <p>See which towers are already live near you and what signal strength to expect before you order a 4G/5G Home Internet router.</p>
+        <a href="https://gttriculture-cloud.github.io/WazyOS-TowerCoverage/" target="_blank" rel="noopener" class="btn btn-solid">
+          Open full tower coverage map
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -568,7 +602,8 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
         Mobile Data Plans
       </div>
       <h2>SIM plans that scale<br>with how loud your month gets.</h2>
-      <p>From a one-day top-up to genuinely unlimited. Every plan rides on 4G and 5G where it's live, with full VoLTE and VoNR calling built in — and works on physical SIM or eSIM the moment your device is unlocked.</p>
+      <p>From a one-day top-up to genuinely unlimited. Every plan rides on 4G and 5G where it's live, with full VoLTE and VoNR calling and ultra-low latency built in — and works on physical SIM or eSIM the moment your device is unlocked.</p>
+      <p>Our 4G and 4G+ services for mobile data are available nationwide. All our plans support 4G and 4G+, except for voice plans.</p>
     </div>
 
     <div class="tabs" id="tabBar">
@@ -696,6 +731,7 @@ const fiberPlans = [
   {name:"Fiber 8G", down:8000, up:8000, price:69999},
 ];
 const homePlans = [
+  {name:"Home 10", network:"4G/5G", down:10, up:5, price:4000},
   {name:"Home 20", network:"4G/5G", down:20, up:10, price:5999},
   {name:"Home 50", network:"4G/5G", down:50, up:25, price:8500},
   {name:"Home 100", network:"5G", down:100, up:50, price:11000, featured:true, badge:"⭐"},
@@ -704,6 +740,7 @@ const mobilePrepaid = {
   headers:["Plan","Validity","Data","Voice / SMS","5G","5G+","Price (GYD)"],
   rows:[
     ["Quick 1","1 day","5 GB","10 min / SMS",1,0,300],
+    ["Quick 3","3 days","7 GB","20 min / SMS",1,0,540],
     ["Quick 7","7 days","15 GB","30 min / SMS",1,0,760],
     ["Weekly Max","7 days","30 GB","60 min / SMS",1,0,1260],
   ]
@@ -711,19 +748,20 @@ const mobilePrepaid = {
 const mobileThirty = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Connect 15","15 GB","100 min","100",1,0,1500],
-    ["Connect 30","30 GB","200 min","200",1,0,2260],
-    ["Connect 60","60 GB","300 min","300",1,0,3260],
-    ["Connect 100 ⭐","100 GB","500 min","500",1,0,4000],
-    ["Connect 150 ⭐","150 GB","Unlimited on-net + 600 off-net","600",1,1,5000],
+    ["Connect 15","15 GB","100 min + 25 off net","100",1,0,1500],
+    ["Connect 30","30 GB","200 min + 50 off net","200",1,0,2260],
+    ["Connect 60","60 GB","300 min + 100 off net","300",1,0,3260],
+    ["Connect 100","100 GB","500 mins + 250 off net","500",1,0,4000],
+    ["Connect 150","150 GB","Unlimited on-net + 600 off-net","600",1,1,5000],
     ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,6500],
-    ["Connect 500 👑","500 GB","Unlimited local","Unlimited",1,1,8000],
+    ["Connect 500","500 GB","Unlimited local","Unlimited",1,1,8000],
   ]
 };
 const mobileNinety = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
     ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,9000],
+    ["Insane 90 Voice","-","Unlimited","Unlimited",0,0,6500],
     ["Insane Unlimited","Unlimited","Unlimited local","Unlimited",1,1,12000],
   ]
 };
@@ -777,7 +815,7 @@ homePlans.forEach(p=>{
 
 /* ============ RENDER MOBILE PLAN GRIDS (CSS grid rows — guarantees column alignment) ============ */
 const tip5G = "Tower speeds for regular mid-band 5G are capped at 1 Gbps, so you will not achieve faster data speeds than 1 Gbps and should expect lower once there is high demand for a tower or there is an outage.";
-const tip5GPlus = "Tower speeds for mmWave high-band 5G are capped at 4 Gbps, so you can expect faster speeds and better latency than regular 5G. You should expect slightly lower speeds because these are usually very high demand areas, or if there is an outage.";
+const tip5GPlus = "Tower speeds for mmWave high-band 5G+ are capped at 4gbps, so you can expect faster speeds and better latency than regular 5G. You should expect slightly lower speeds than 4gbps because these are usually very high demand areas and towers may need to connect to more devices than usual, adding congestion or if there is an outage.";
 
 function headerCell(h){
   if(h === '5G' || h === '5G+'){
