@@ -255,13 +255,13 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 
 /* ================= COVERAGE ================= */
 .coverage-wrap{
-  display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;
+  display:flex; flex-direction:column; gap:40px;
 }
-@media(max-width:900px){.coverage-wrap{grid-template-columns:1fr;}}
 .map-frame{
   position:relative; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
-  aspect-ratio:4/3.4; background:var(--panel);
+  aspect-ratio:2.5/1; width:100%; background:var(--panel);
 }
+@media(max-width:700px){.map-frame{aspect-ratio:4/3;}}
 .map-frame iframe{width:100%; height:100%; border:0; filter:grayscale(.15) contrast(1.05);}
 .map-frame .scan{
   position:absolute; left:0; right:0; height:120px; pointer-events:none;
@@ -275,6 +275,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
   backdrop-filter:blur(6px);
 }
 .frame-label .d{width:6px; height:6px; border-radius:50%; background:#fff; animation:blink 1.6s infinite;}
+.coverage-copy{max-width:640px; margin:0 auto; text-align:center;}
 .coverage-copy h3{font-family:'Space Grotesk'; font-size:30px; margin-bottom:16px; letter-spacing:-1px;}
 .coverage-copy p{color:var(--grey); line-height:1.75; margin-bottom:22px; font-size:15px;}
 .region-list{font-size:13.5px; color:var(--grey-dim); line-height:1.9; margin-bottom:28px;}
@@ -316,6 +317,29 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .pcell.plan{font-family:'Space Grotesk'; font-weight:600; font-size:15px;}
 .pcell.price{font-family:'JetBrains Mono'; font-weight:600;}
 .pcell:nth-child(5), .pcell:nth-child(6){text-align:center;}
+.th-info{display:flex; align-items:center; justify-content:center; gap:5px;}
+.info-dot{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  width:14px; height:14px; border:1px solid var(--grey-dim); border-radius:50%;
+  font-size:9px; line-height:1; color:var(--grey); cursor:help; flex-shrink:0;
+  text-transform:none; letter-spacing:normal; font-family:'Inter',sans-serif;
+}
+.info-dot:hover, .info-dot:focus{border-color:var(--white); color:var(--white); outline:none;}
+.tooltip-box{
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(-6px);
+  width:240px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
+  padding:13px 15px; font-size:11.5px; line-height:1.65; color:var(--grey); font-weight:400;
+  text-transform:none; letter-spacing:normal; text-align:left;
+  opacity:0; visibility:hidden; transition:opacity .25s var(--ease), transform .25s var(--ease);
+  z-index:60; box-shadow:0 24px 48px -14px rgba(0,0,0,.7); pointer-events:none;
+}
+.tooltip-box::after{
+  content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
+  border:6px solid transparent; border-bottom-color:var(--line);
+}
+.info-dot:hover .tooltip-box, .info-dot:focus .tooltip-box{
+  opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);
+}
 .tick{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;}
 .tick.yes svg{stroke:var(--white);}
 .tick.no{color:var(--grey-dim); font-size:14px;}
@@ -673,8 +697,8 @@ const fiberPlans = [
 ];
 const homePlans = [
   {name:"Home 20", network:"4G/5G", down:20, up:10, price:5999},
-  {name:"Home 50", network:"4G/5G", down:50, up:25, price:7499},
-  {name:"Home 100", network:"5G", down:100, up:50, price:8999, featured:true, badge:"⭐"},
+  {name:"Home 50", network:"4G/5G", down:50, up:25, price:8500},
+  {name:"Home 100", network:"5G", down:100, up:50, price:11000, featured:true, badge:"⭐"},
 ];
 const mobilePrepaid = {
   headers:["Plan","Validity","Data","Voice / SMS","5G","5G+","Price (GYD)"],
@@ -752,9 +776,20 @@ homePlans.forEach(p=>{
 });
 
 /* ============ RENDER MOBILE PLAN GRIDS (CSS grid rows — guarantees column alignment) ============ */
+const tip5G = "Tower speeds for regular mid-band 5G are capped at 1 Gbps, so you will not achieve faster data speeds than 1 Gbps and should expect lower once there is high demand for a tower or there is an outage.";
+const tip5GPlus = "Tower speeds for mmWave high-band 5G are capped at 4 Gbps, so you can expect faster speeds and better latency than regular 5G. You should expect slightly lower speeds because these are usually very high demand areas, or if there is an outage.";
+
+function headerCell(h){
+  if(h === '5G' || h === '5G+'){
+    const tip = h === '5G' ? tip5G : tip5GPlus;
+    return `<div class="pcell th-info">${h}<span class="info-dot" tabindex="0">?<span class="tooltip-box">${tip}</span></span></div>`;
+  }
+  return `<div class="pcell">${h}</div>`;
+}
+
 function renderPlanGrid(elId, dataset){
   const el = document.getElementById(elId);
-  const head = `<div class="ptable-row head">${dataset.headers.map(h=>`<div class="pcell">${h}</div>`).join('')}</div>`;
+  const head = `<div class="ptable-row head">${dataset.headers.map(h=>headerCell(h)).join('')}</div>`;
   const rows = dataset.rows.map(r=>{
     return `<div class="ptable-row">
       <div class="pcell plan">${r[0]}</div>
