@@ -317,13 +317,8 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
   font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey);
   border-bottom:1px solid var(--line); padding:14px 18px;
 }
-.ptable-row:not(.head){transition:background .3s;}
-.ptable-row:not(.head):hover{background:var(--panel);}
-.ptable-row:not(.head)::before{
-  content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:linear-gradient(90deg, rgba(255,255,255,.06), transparent);
-  transition:width .5s var(--ease); pointer-events:none;
-}
-.ptable-row:not(.head):hover::before{width:100%;}
+.ptable-row:not(.head){transition:background .2s;}
+.ptable-row:not(.head):hover{background:var(--panel-2);}
 .pcell{font-size:14px; position:relative; z-index:1; min-width:0;}
 .pcell.plan{font-family:'Space Grotesk'; font-weight:600; font-size:15px;}
 .pcell.price{font-family:'JetBrains Mono'; font-weight:600;}
@@ -339,7 +334,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .info-dot:hover, .info-dot:focus{border-color:var(--white); color:var(--white); outline:none;}
 .tooltip-box{
   position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(-6px);
-  width:240px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
+  width:250px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px;
   padding:13px 15px; font-size:11.5px; line-height:1.65; color:var(--grey); font-weight:400;
   text-transform:none; letter-spacing:normal; text-align:left;
   opacity:0; visibility:hidden; transition:opacity .25s var(--ease), transform .25s var(--ease);
@@ -565,7 +560,8 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
 
       <div class="tower-callout">
         <h3>Fiber not in your area?</h3>
-        <p>Check to see if a tower is nearby for a 4G/5G Home Internet plan — same WazyOS reliability and ultra-low latency, no cable required.</p>
+        <p>Check to see if a tower or marked area is nearby for a 4G/5G Home Internet plan — same WazyOS reliability and ultra-low latency, no cable required.</p>
+        <p>Even if only a 5G+ tower shows up near you, you can still get a 4G/5G Home Internet plan — your router will simply connect at standard 5G speeds instead.</p>
         <p>Our 4G and 4G+ services for mobile data are available nationwide — check to see if there's a 5G tower nearby as well using the map below.</p>
       </div>
 
@@ -748,12 +744,12 @@ const mobilePrepaid = {
 const mobileThirty = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Connect 15","15 GB","100 min + 25 off net","100",1,0,1500],
-    ["Connect 30","30 GB","200 min + 50 off net","200",1,0,2260],
-    ["Connect 60","60 GB","300 min + 100 off net","300",1,0,3260],
-    ["Connect 100","100 GB","500 mins + 250 off net","500",1,0,4000],
-    ["Connect 150","150 GB","Unlimited on-net + 600 off-net","600",1,1,5000],
-    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,6500],
+    ["Connect 15","15 GB","100 mins on-net + 25 mins off-net","100",1,0,1500],
+    ["Connect 30","30 GB","200 mins on-net + 50 mins off-net","200",1,0,2260],
+    ["Connect 60","60 GB","300 mins on-net + 100 mins off-net","300",1,0,3260],
+    ["Connect 100","100 GB","500 mins on-net + 250 mins off-net","500",1,0,4000],
+    ["Connect 150","150 GB","Unlimited on-net + 600 mins off-net","600",1,1,5000],
+    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 mins off-net","1,000",1,1,6500],
     ["Connect 500","500 GB","Unlimited local","Unlimited",1,1,8000],
   ]
 };
@@ -762,7 +758,7 @@ const mobileNinety = {
   rows:[
     ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,9000],
     ["Insane 90 Voice","-","Unlimited","Unlimited",0,0,6500],
-    ["Insane Unlimited","Unlimited","Unlimited local","Unlimited",1,1,12000],
+    ["Insane Unlimited 90","Unlimited","Unlimited local","Unlimited",1,1,12000],
   ]
 };
 
@@ -814,8 +810,8 @@ homePlans.forEach(p=>{
 });
 
 /* ============ RENDER MOBILE PLAN GRIDS (CSS grid rows — guarantees column alignment) ============ */
-const tip5G = "Tower speeds for regular mid-band 5G are capped at 1 Gbps, so you will not achieve faster data speeds than 1 Gbps and should expect lower once there is high demand for a tower or there is an outage.";
-const tip5GPlus = "Tower speeds for mmWave high-band 5G+ are capped at 4gbps, so you can expect faster speeds and better latency than regular 5G. You should expect slightly lower speeds than 4gbps because these are usually very high demand areas and towers may need to connect to more devices than usual, adding congestion or if there is an outage.";
+const tip5G = "Tower speeds for regular mid-band 5G are capped at 1 Gbps, so you will not achieve faster data speeds than 1 Gbps and should expect lower once there is high demand for a tower or there is an outage. If your phone doesn't support 5G, your data automatically drops back to 4G or 4G+, so you'll always stay connected.";
+const tip5GPlus = "Tower speeds for mmWave high-band 5G+ are capped at 4 Gbps, so you can expect faster speeds and better latency than regular 5G. You should expect slightly lower speeds than 4 Gbps because these are usually very high demand areas and towers may need to connect to more devices than usual, adding congestion, or if there is an outage. If your plan doesn't support 5G+ but a 5G+ tower is nearby, your phone will automatically drop to standard 5G, so you shouldn't run into any issues.";
 
 function headerCell(h){
   if(h === '5G' || h === '5G+'){
