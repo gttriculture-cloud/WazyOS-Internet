@@ -299,6 +299,11 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 }
 .tab-btn.active, .tab-btn:hover{border-color:var(--white); color:var(--white);}
 .tab-btn.active{background:var(--white); color:var(--black);}
+#roamCountryBar .tab-btn.active{color:#000; font-weight:700;}
+.roam-dest-heading{
+  text-align:center; font-family:'Space Grotesk'; font-size:19px; font-weight:700;
+  margin-bottom:18px; letter-spacing:-.2px;
+}
 .tab-panel{display:none;}
 .tab-panel.active{display:block; animation:fadeUp .5s var(--ease);}
 @keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
@@ -655,7 +660,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     <div class="sub-head reveal">
       <span class="sub-eyebrow">Roaming</span>
       <h3>Take your data with you.</h3>
-      <p>Short-term data passes for the USA, Canada, UK, EU, India, China and the wider Caribbean — pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
+      <p>Short-term data passes for 17 destinations across the Americas, Europe, Asia, the Middle East, Oceania and Africa — pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
     </div>
 
     <div class="tabs" id="roamCountryBar">
@@ -666,8 +671,19 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <button class="tab-btn" data-country="india">🇮🇳 India</button>
       <button class="tab-btn" data-country="china">🇨🇳 China</button>
       <button class="tab-btn" data-country="caribbean">🌴 Caribbean</button>
+      <button class="tab-btn" data-country="singapore">🇸🇬 Singapore</button>
+      <button class="tab-btn" data-country="japan">🇯🇵 Japan</button>
+      <button class="tab-btn" data-country="southkorea">🇰🇷 South Korea</button>
+      <button class="tab-btn" data-country="panama">🇵🇦 Panama</button>
+      <button class="tab-btn" data-country="venezuela">🇻🇪 Venezuela</button>
+      <button class="tab-btn" data-country="brazil">🇧🇷 Brazil</button>
+      <button class="tab-btn" data-country="uae">🇦🇪 UAE</button>
+      <button class="tab-btn" data-country="colombia">🇨🇴 Colombia</button>
+      <button class="tab-btn" data-country="australia">🇦🇺 Australia</button>
+      <button class="tab-btn" data-country="southafrica">🇿🇦 South Africa</button>
     </div>
 
+    <div class="roam-dest-heading" id="roamDestHeading"></div>
     <div class="table-scroll">
       <div class="plan-table" id="roamTable"></div>
     </div>
@@ -907,12 +923,12 @@ document.querySelectorAll('#tabBar .tab-btn').forEach(btn=>{
 /* ============ ROAMING ============ */
 const roamDurations = ["1 Day","3 Days","7 Days","14 Days","21 Days","30 Days"];
 const roamVoice = [
-  "30 mins + 30 SMS",
+  "10 mins + 10 SMS",
+  "20 mins + 20 SMS",
+  "40 mins + 40 SMS",
   "75 mins + 75 SMS",
+  "110 mins + 110 SMS",
   "150 mins + 150 SMS",
-  "300 mins + 300 SMS",
-  "450 mins + 450 SMS",
-  "600 mins + 600 SMS",
 ];
 
 const euCountries = [
@@ -957,31 +973,38 @@ const caribbeanAssociates = [
 
 const roamCountries = {
   usa: {
+    flag:"🇺🇸", name:"United States",
     provider:"T-Mobile, Verizon", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[4500,6500,9500,15500,19500,25500],
   },
   canada: {
+    flag:"🇨🇦", name:"Canada",
     provider:"Bell Canada", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   uk: {
+    flag:"🇬🇧", name:"United Kingdom",
     provider:"EE", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
   },
   eu: {
+    flag:"🇪🇺", name:"European Union",
     provider:"27 national partners — see full list below", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
     countryLists:[{title:"EU member states & network partners", list:euCountries}],
   },
   india: {
+    flag:"🇮🇳", name:"India",
     provider:"Reliance Jio, Bharti Airtel", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3000,4800,7500,12000,15500,19000],
   },
   china: {
+    flag:"🇨🇳", name:"China",
     provider:"China Mobile", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   caribbean: {
+    flag:"🌴", name:"Caribbean",
     provider:"FLOW, Digicel and local partners across the region", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[1500,2500,4000,6500,8500,10500],
     countryLists:[
@@ -989,10 +1012,61 @@ const roamCountries = {
       {title:"Associate members", list:caribbeanAssociates},
     ],
   },
+  singapore: {
+    flag:"🇸🇬", name:"Singapore",
+    provider:"Singtel, StarHub", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  japan: {
+    flag:"🇯🇵", name:"Japan",
+    provider:"NTT Docomo", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  southkorea: {
+    flag:"🇰🇷", name:"South Korea",
+    provider:"SK Telecom", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  panama: {
+    flag:"🇵🇦", name:"Panama",
+    provider:"+Móvil, Tigo", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[1500,2500,4000,6500,8500,10500],
+  },
+  venezuela: {
+    flag:"🇻🇪", name:"Venezuela",
+    provider:"Movistar Venezuela", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  brazil: {
+    flag:"🇧🇷", name:"Brazil",
+    provider:"Vivo, Claro Brasil", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  uae: {
+    flag:"🇦🇪", name:"United Arab Emirates",
+    provider:"e&, du", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  colombia: {
+    flag:"🇨🇴", name:"Colombia",
+    provider:"Claro, Movistar", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  australia: {
+    flag:"🇦🇺", name:"Australia",
+    provider:"Telstra, Optus", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  southafrica: {
+    flag:"🇿🇦", name:"South Africa",
+    provider:"Vodacom, MTN", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
 };
 
 function renderRoamTable(key){
   const c = roamCountries[key];
+  document.getElementById('roamDestHeading').innerHTML = `${c.flag} ${c.name}`;
   const head = `<div class="ptable-row rtable head">
     <div class="pcell">Duration</div>
     <div class="pcell">Data</div>
