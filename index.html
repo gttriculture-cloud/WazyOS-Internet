@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
 :root{
   --black:#050506;
@@ -303,6 +304,14 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .roam-dest-heading{
   text-align:center; font-family:'Space Grotesk'; font-size:19px; font-weight:700;
   margin-bottom:18px; letter-spacing:-.2px;
+}
+.roam-dest-note{
+  text-align:center; font-size:12.5px; color:var(--grey); max-width:560px;
+  margin:-10px auto 22px; line-height:1.6;
+}
+img.twemoji-flag{
+  height:1em; width:1em; margin:0 .12em -0.1em 0; vertical-align:-0.05em;
+  display:inline-block; border-radius:2px;
 }
 .tab-panel{display:none;}
 .tab-panel.active{display:block; animation:fadeUp .5s var(--ease);}
@@ -660,7 +669,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     <div class="sub-head reveal">
       <span class="sub-eyebrow">Roaming</span>
       <h3>Take your data with you.</h3>
-      <p>Short-term data passes for 17 destinations across the Americas, Europe, Asia, the Middle East, Oceania and Africa — pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
+      <p>Short-term data passes for 31 destinations across the Americas, Europe, Asia, the Middle East, Oceania and Africa — pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
     </div>
 
     <div class="tabs" id="roamCountryBar">
@@ -681,9 +690,24 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <button class="tab-btn" data-country="colombia">🇨🇴 Colombia</button>
       <button class="tab-btn" data-country="australia">🇦🇺 Australia</button>
       <button class="tab-btn" data-country="southafrica">🇿🇦 South Africa</button>
+      <button class="tab-btn" data-country="aruba">🇦🇼 Aruba</button>
+      <button class="tab-btn" data-country="sintmaarten">🇸🇽 Sint Maarten</button>
+      <button class="tab-btn" data-country="cuba">🇨🇺 Cuba</button>
+      <button class="tab-btn" data-country="ghana">🇬🇭 Ghana</button>
+      <button class="tab-btn" data-country="qatar">🇶🇦 Qatar</button>
+      <button class="tab-btn" data-country="dominicanrepublic">🇩🇴 Dominican Republic</button>
+      <button class="tab-btn" data-country="belize">🇧🇿 Belize</button>
+      <button class="tab-btn" data-country="argentina">🇦🇷 Argentina</button>
+      <button class="tab-btn" data-country="chile">🇨🇱 Chile</button>
+      <button class="tab-btn" data-country="russia">🇷🇺 Russia</button>
+      <button class="tab-btn" data-country="malaysia">🇲🇾 Malaysia</button>
+      <button class="tab-btn" data-country="fiji">🇫🇯 Fiji</button>
+      <button class="tab-btn" data-country="philippines">🇵🇭 Philippines</button>
+      <button class="tab-btn" data-country="mexico">🇲🇽 Mexico</button>
     </div>
 
     <div class="roam-dest-heading" id="roamDestHeading"></div>
+    <div class="roam-dest-note" id="roamDestNote"></div>
     <div class="table-scroll">
       <div class="plan-table" id="roamTable"></div>
     </div>
@@ -786,7 +810,7 @@ function gyd(n){ return roundTo20(n).toLocaleString(); }
 
 /* ============ DATA ============ */
 const fiberPlans = [
-  {name:"Fiber 50", down:50, up:25, price:4000},
+  {name:"Fiber 50", down:50, up:25, price:4200},
   {name:"Fiber 100", down:100, up:50, price:6499},
   {name:"Fiber 300", down:300, up:150, price:8999},
   {name:"Fiber 500", down:500, up:250, price:10999},
@@ -799,7 +823,7 @@ const homePlans = [
   {name:"Home 10", network:"4G/5G", down:10, up:5, price:4000},
   {name:"Home 20", network:"4G/5G", down:20, up:10, price:5999},
   {name:"Home 50", network:"4G/5G", down:50, up:15, price:9500},
-  {name:"Home 100", network:"5G", down:100, up:25, price:14000, featured:true, badge:"⭐"},
+  {name:"Home 100", network:"5G", down:100, up:25, price:15000, featured:true, badge:"⭐"},
 ];
 const mobilePrepaid = {
   headers:["Plan","Validity","Data","Voice / SMS","5G","5G+","Price (GYD)"],
@@ -975,6 +999,7 @@ const roamCountries = {
   usa: {
     flag:"🇺🇸", name:"United States",
     provider:"T-Mobile, Verizon", generation:"5G roaming where available, 4G/4G+",
+    note:"Includes all U.S. territories — Puerto Rico, Guam, the U.S. Virgin Islands, American Samoa and the Northern Mariana Islands.",
     data:[3,6,12,20,30,40], price:[4500,6500,9500,15500,19500,25500],
   },
   canada: {
@@ -1062,11 +1087,88 @@ const roamCountries = {
     provider:"Vodacom, MTN", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
+  aruba: {
+    flag:"🇦🇼", name:"Aruba",
+    provider:"Setar, Digicel", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  sintmaarten: {
+    flag:"🇸🇽", name:"Sint Maarten",
+    provider:"FLOW", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  cuba: {
+    flag:"🇨🇺", name:"Cuba",
+    provider:"ETECSA", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  ghana: {
+    flag:"🇬🇭", name:"Ghana",
+    provider:"MTN", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  qatar: {
+    flag:"🇶🇦", name:"Qatar",
+    provider:"Ooredoo Qatar, Vodafone Qatar", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  dominicanrepublic: {
+    flag:"🇩🇴", name:"Dominican Republic",
+    provider:"Claro, Altice", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  belize: {
+    flag:"🇧🇿", name:"Belize",
+    provider:"Digicel, Smart", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  argentina: {
+    flag:"🇦🇷", name:"Argentina",
+    provider:"Personal, Claro", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  chile: {
+    flag:"🇨🇱", name:"Chile",
+    provider:"Entel, Movistar", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  russia: {
+    flag:"🇷🇺", name:"Russia",
+    provider:"MTS, MegaFon", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  malaysia: {
+    flag:"🇲🇾", name:"Malaysia",
+    provider:"U Mobile, CelcomDigi", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  fiji: {
+    flag:"🇫🇯", name:"Fiji",
+    provider:"Vodafone Fiji, Digicel Fiji", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  philippines: {
+    flag:"🇵🇭", name:"Philippines",
+    provider:"Globe Telecom, Smart Communications", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  mexico: {
+    flag:"🇲🇽", name:"Mexico",
+    provider:"AT&T Mexico, Movistar", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
 };
 
 function renderRoamTable(key){
   const c = roamCountries[key];
   document.getElementById('roamDestHeading').innerHTML = `${c.flag} ${c.name}`;
+  document.getElementById('roamDestNote').innerHTML = c.note ? c.note : '';
+  if(window.twemoji){
+    twemoji.parse(document.getElementById('roaming'), {
+      folder:'svg', ext:'.svg',
+      className:'twemoji-flag'
+    });
+  }
   const head = `<div class="ptable-row rtable head">
     <div class="pcell">Duration</div>
     <div class="pcell">Data</div>
