@@ -353,16 +353,32 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .table-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel);}
 .table-scroll::-webkit-scrollbar{height:6px;}
 
-.roam-banner{
-  margin-top:56px; border:1px dashed var(--line); border-radius:var(--radius); padding:40px; text-align:center;
-  background:repeating-linear-gradient(135deg, var(--panel), var(--panel) 10px, var(--panel-2) 10px, var(--panel-2) 20px);
+.roam-meta{
+  display:flex; gap:32px; justify-content:center; flex-wrap:wrap;
+  margin:22px 0 6px; font-size:13px; color:var(--grey);
 }
-.roam-banner h4{font-family:'Space Grotesk'; font-size:22px; margin-bottom:8px;}
-.roam-banner p{color:var(--grey); font-size:14px;}
-.roam-banner .pill{
-  display:inline-block; margin-top:16px; font-size:11px; letter-spacing:2px; text-transform:uppercase;
-  border:1px solid var(--line); padding:8px 16px; border-radius:20px; color:var(--grey);
+.roam-meta b{color:var(--white); font-weight:600;}
+.roam-country-list{max-width:840px; margin:30px auto 0;}
+.roam-country-list h4{
+  font-family:'Space Grotesk'; font-size:14px; text-align:center; letter-spacing:.5px;
+  margin-bottom:14px; color:var(--grey);
 }
+.roam-country-list h4:not(:first-child){margin-top:26px;}
+.roam-country-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+}
+.roam-country-item{
+  background:var(--panel); padding:12px 16px; font-size:12.5px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+}
+.roam-country-item .cname{color:var(--white); font-weight:500;}
+.roam-country-item .cprov{color:var(--grey); text-align:right;}
+.roam-policy{margin-top:44px;}
+.roam-policy p{margin-bottom:14px;}
+.roam-policy p:last-child{margin-bottom:0; color:var(--grey-dim); font-size:13px;}
+.ptable-row.rtable{grid-template-columns: 0.9fr 0.7fr 1.7fr 0.9fr;}
+.rtable-inner{min-width:560px;}
 
 /* ================= WHY / FEATURES STRIP ================= */
 .feature-strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
@@ -622,11 +638,47 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <div class="table-scroll">
         <div class="plan-table" id="table-ninety"></div>
       </div>
-      <div class="roam-banner reveal">
-        <h4 class="display">Roaming</h4>
-        <p>International roaming plans are on the way — Caribbean and North America first.</p>
-        <span class="pill">Coming soon</span>
-      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pulse-divider pulse-divider-small" data-pulse>
+  <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+    <path d="M0,45 L400,45 L420,10 L440,80 L460,45 L1200,45" />
+    <path class="active-line" d="M0,45 L400,45 L420,10 L440,80 L460,45 L1200,45" />
+  </svg>
+</div>
+
+<!-- ============ ROAMING ============ -->
+<section id="roaming">
+  <div class="container">
+    <div class="sub-head reveal">
+      <span class="sub-eyebrow">Roaming</span>
+      <h3>Take your data with you.</h3>
+      <p>Short-term data passes for the USA, Canada, UK, EU, India, China and the wider Caribbean — pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
+    </div>
+
+    <div class="tabs" id="roamCountryBar">
+      <button class="tab-btn active" data-country="usa">🇺🇸 USA</button>
+      <button class="tab-btn" data-country="canada">🇨🇦 Canada</button>
+      <button class="tab-btn" data-country="uk">🇬🇧 UK</button>
+      <button class="tab-btn" data-country="eu">🇪🇺 EU</button>
+      <button class="tab-btn" data-country="india">🇮🇳 India</button>
+      <button class="tab-btn" data-country="china">🇨🇳 China</button>
+      <button class="tab-btn" data-country="caribbean">🌴 Caribbean</button>
+    </div>
+
+    <div class="table-scroll">
+      <div class="plan-table" id="roamTable"></div>
+    </div>
+    <div class="roam-meta" id="roamMeta"></div>
+    <div id="roamCountryList"></div>
+
+    <div class="tower-callout roam-policy reveal">
+      <h3>What happens when your data runs out?</h3>
+      <p>Your line is never disconnected when a roaming allowance is used up. Instead, data automatically drops to 4G only, with speeds throttled to roughly 64 kbps or lower, until you renew your current plan, purchase a new one, or your existing plan expires — at which point full-speed access resumes.</p>
+      <p>Any outgoing calls or SMS made beyond your included allowance during this period are billed at standard international roaming rates, while data access remains unavailable until a new plan is activated.</p>
+      <p>Incoming SMS is always free, on every plan, in every destination.</p>
     </div>
   </div>
 </section>
@@ -696,7 +748,7 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
       <h5>Company</h5>
       <a href="#coverage">Coverage Zones</a>
       <a href="#top">WazyOS Group</a>
-      <a href="#mobile">Roaming (soon)</a>
+      <a href="#roaming">Roaming</a>
     </div>
     <div class="footer-col">
       <h5>Support</h5>
@@ -718,6 +770,7 @@ function gyd(n){ return roundTo20(n).toLocaleString(); }
 
 /* ============ DATA ============ */
 const fiberPlans = [
+  {name:"Fiber 50", down:50, up:25, price:4000},
   {name:"Fiber 100", down:100, up:50, price:6499},
   {name:"Fiber 300", down:300, up:150, price:8999},
   {name:"Fiber 500", down:500, up:250, price:10999},
@@ -729,8 +782,8 @@ const fiberPlans = [
 const homePlans = [
   {name:"Home 10", network:"4G/5G", down:10, up:5, price:4000},
   {name:"Home 20", network:"4G/5G", down:20, up:10, price:5999},
-  {name:"Home 50", network:"4G/5G", down:50, up:25, price:8500},
-  {name:"Home 100", network:"5G", down:100, up:50, price:11000, featured:true, badge:"⭐"},
+  {name:"Home 50", network:"4G/5G", down:50, up:15, price:9500},
+  {name:"Home 100", network:"5G", down:100, up:25, price:14000, featured:true, badge:"⭐"},
 ];
 const mobilePrepaid = {
   headers:["Plan","Validity","Data","Voice / SMS","5G","5G+","Price (GYD)"],
@@ -749,16 +802,16 @@ const mobileThirty = {
     ["Connect 60","60 GB","300 mins on-net + 100 mins off-net","300",1,0,3260],
     ["Connect 100","100 GB","500 mins on-net + 250 mins off-net","500",1,0,4000],
     ["Connect 150","150 GB","Unlimited on-net + 600 mins off-net","600",1,1,5000],
-    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 mins off-net","1,000",1,1,6500],
-    ["Connect 500","500 GB","Unlimited local","Unlimited",1,1,8000],
+    ["Connect 250 🔥","250 GB","Unlimited on-net + 1,000 mins off-net","1,000",1,1,6240],
+    ["Connect 500","500 GB","Unlimited local","Unlimited",1,1,7500],
   ]
 };
 const mobileNinety = {
   headers:["Plan","Data","Local Voice","SMS","5G","5G+","Price (GYD)"],
   rows:[
-    ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,9000],
+    ["Insane 90","500 GB","Unlimited on-net + 1,000 off-net","1,000",1,1,9500],
     ["Insane 90 Voice","-","Unlimited","Unlimited",0,0,6500],
-    ["Insane Unlimited 90","Unlimited","Unlimited local","Unlimited",1,1,12000],
+    ["Insane Unlimited 90","Unlimited","Unlimited local","Unlimited",1,1,14000],
   ]
 };
 
@@ -841,13 +894,149 @@ renderPlanGrid('table-prepaid', mobilePrepaid);
 renderPlanGrid('table-thirty', mobileThirty);
 renderPlanGrid('table-ninety', mobileNinety);
 
-/* ============ TABS ============ */
-document.querySelectorAll('.tab-btn').forEach(btn=>{
+/* ============ TABS (Prepaid / 30-Day / 90-Day) ============ */
+document.querySelectorAll('#tabBar .tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('#tabBar .tab-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ============ ROAMING ============ */
+const roamDurations = ["1 Day","3 Days","7 Days","14 Days","21 Days","30 Days"];
+const roamVoice = [
+  "30 mins + 30 SMS",
+  "75 mins + 75 SMS",
+  "150 mins + 150 SMS",
+  "300 mins + 300 SMS",
+  "450 mins + 450 SMS",
+  "600 mins + 600 SMS",
+];
+
+const euCountries = [
+  ["Austria","Magenta Telekom"],["Belgium","Proximus"],["Bulgaria","A1 Bulgaria"],
+  ["Croatia","Hrvatski Telekom"],["Cyprus","CYTA"],["Czechia","T-Mobile"],
+  ["Denmark","Telenor"],["Estonia","Telia"],["Finland","Elisa"],
+  ["France","Orange"],["Germany","Vodafone"],["Greece","Cosmote"],
+  ["Hungary","Yettel"],["Ireland","Vodafone"],["Italy","TIM"],
+  ["Latvia","LMT"],["Lithuania","Telia"],["Luxembourg","POST"],
+  ["Malta","Epic"],["Netherlands","KPN"],["Poland","T-Mobile"],
+  ["Portugal","MEO"],["Romania","Orange"],["Slovakia","Slovak Telekom"],
+  ["Slovenia","Telekom Slovenije"],["Spain","Movistar"],["Sweden","Tele2"],
+];
+
+const caricomCountries = [
+  ["Antigua and Barbuda","FLOW and Digicel"],
+  ["The Bahamas","BTC and Aliv"],
+  ["Barbados","FLOW and Digicel"],
+  ["Belize","Digi (BTL) and Smart"],
+  ["Dominica","FLOW and Digicel"],
+  ["Grenada","FLOW and Digicel"],
+  ["Guyana","Home network — no roaming charges"],
+  ["Haiti","Digicel and Natcom"],
+  ["Jamaica","FLOW and Digicel"],
+  ["Montserrat","FLOW and Digicel"],
+  ["Saint Kitts and Nevis","FLOW and Digicel"],
+  ["Saint Lucia","FLOW and Digicel"],
+  ["Saint Vincent and the Grenadines","FLOW and Digicel"],
+  ["Suriname","Telesur and Digicel"],
+  ["Trinidad and Tobago","bmobile (TSTT) and Digicel"],
+];
+const caribbeanAssociates = [
+  ["Anguilla","FLOW and Digicel"],
+  ["Bermuda","One Communications and Digicel"],
+  ["British Virgin Islands","FLOW and Digicel"],
+  ["Cayman Islands","FLOW and Digicel"],
+  ["Curaçao","FLOW (formerly UTS, Chippie) and Digicel"],
+  ["Turks and Caicos Islands","FLOW and Digi (TCI)"],
+  ["Martinique","Orange Caraïbe and SFR Caraïbe"],
+  ["French Guiana","Orange Caraïbe and SFR Caraïbe"],
+];
+
+const roamCountries = {
+  usa: {
+    provider:"T-Mobile, Verizon", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,15500,19500,25500],
+  },
+  canada: {
+    provider:"Bell Canada", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  uk: {
+    provider:"EE", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
+  },
+  eu: {
+    provider:"27 national partners — see full list below", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
+    countryLists:[{title:"EU member states & network partners", list:euCountries}],
+  },
+  india: {
+    provider:"Reliance Jio, Bharti Airtel", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3000,4800,7500,12000,15500,19000],
+  },
+  china: {
+    provider:"China Mobile", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
+  },
+  caribbean: {
+    provider:"FLOW, Digicel and local partners across the region", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[1500,2500,4000,6500,8500,10500],
+    countryLists:[
+      {title:"CARICOM member states", list:caricomCountries},
+      {title:"Associate members", list:caribbeanAssociates},
+    ],
+  },
+};
+
+function renderRoamTable(key){
+  const c = roamCountries[key];
+  const head = `<div class="ptable-row rtable head">
+    <div class="pcell">Duration</div>
+    <div class="pcell">Data</div>
+    <div class="pcell">Free calls &amp; SMS</div>
+    <div class="pcell">Price (GYD)</div>
+  </div>`;
+  const rows = roamDurations.map((d,i)=>`
+    <div class="ptable-row rtable">
+      <div class="pcell plan">${d}</div>
+      <div class="pcell mono">${c.data[i]} GB</div>
+      <div class="pcell">${roamVoice[i]}</div>
+      <div class="pcell price">$${gyd(c.price[i])}</div>
+    </div>`).join('');
+  document.getElementById('roamTable').innerHTML = `<div class="ptable-inner rtable-inner">${head}${rows}</div>`;
+
+  document.getElementById('roamMeta').innerHTML = `
+    <span>Provider: <b>${c.provider}</b></span>
+    <span>Generation: <b>${c.generation}</b></span>
+  `;
+
+  const listEl = document.getElementById('roamCountryList');
+  if(c.countryLists){
+    listEl.innerHTML = c.countryLists.map(group => `
+      <div class="roam-country-list">
+        <h4>${group.title}</h4>
+        <div class="roam-country-grid">
+          ${group.list.map(([name,prov])=>`
+            <div class="roam-country-item">
+              <span class="cname">${name}</span>
+              <span class="cprov">${prov}</span>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+  } else {
+    listEl.innerHTML = '';
+  }
+}
+renderRoamTable('usa');
+
+document.querySelectorAll('#roamCountryBar .tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#roamCountryBar .tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderRoamTable(btn.dataset.country);
   });
 });
 
