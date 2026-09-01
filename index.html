@@ -300,6 +300,9 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
 .tab-btn.active, .tab-btn:hover{border-color:var(--white); color:var(--white);}
 .tab-btn.active{background:var(--white); color:var(--black);}
 #roamCountryBar .tab-btn.active{color:#000; font-weight:700;}
+#roamContinentBar{margin-bottom:16px;}
+#roamContinentBar .tab-btn{font-weight:600; letter-spacing:.3px;}
+#roamCountryBar{margin-bottom:40px;}
 .roam-dest-heading{
   text-align:center; font-family:'Space Grotesk'; font-size:19px; font-weight:700;
   margin-bottom:18px; letter-spacing:-.2px;
@@ -309,7 +312,7 @@ section{position:relative; padding:120px clamp(20px,5vw,64px); z-index:2;}
   margin:-10px auto 22px; line-height:1.6;
 }
 img.flag-ic{
-  width:18px; height:13px; object-fit:cover; border-radius:2px; margin:0 6px -1px 0;
+  width:20px; height:15px; object-fit:cover; border-radius:2px; margin:0 7px -1px 0;
   display:inline-block; box-shadow:0 0 0 1px rgba(255,255,255,.08);
 }
 .tab-panel{display:none;}
@@ -676,68 +679,22 @@ footer{border-top:1px solid var(--line-soft); padding:60px clamp(20px,5vw,64px) 
     <div class="sub-head reveal">
       <span class="sub-eyebrow">Roaming</span>
       <h3>Take your data with you.</h3>
-      <p>Short-term data passes covering 90 countries — every EU and Caribbean nation included — across the Americas, Europe, Asia, the Middle East, Africa and Oceania. Pick a destination to see pricing, included calls &amp; texts, and network generation.</p>
+      <p>Short-term data passes covering 96 countries — every EU and Caribbean nation included — across the Americas, Europe, Asia, the Middle East, Africa and Oceania. Pick a continent, then a destination, to see pricing, included calls &amp; texts, and network generation.</p>
     </div>
 
     <!--
-      MAINTENANCE NOTE: when adding new roaming destinations, keep the button
-      order sorted first by continent — Caribbean, North America, Europe/EU,
-      South America, Asia (incl. Middle East), Africa, Oceania — and then,
-      within each continent, roughly by popularity among Guyanese travellers
-      (an educated estimate is fine; this doesn't need to be exact).
+      MAINTENANCE NOTE: when adding new roaming destinations, add them to the
+      roamCountries object below with a "continent" of one of: "Caribbean",
+      "North America", "EU", "Europe", "South America", "Asia", "Africa",
+      "Oceania". Caribbean and EU are kept separate from North America and
+      Europe on purpose — don't merge them. Within a continent, keep entries
+      roughly ordered by popularity among Guyanese travellers (an educated
+      estimate is fine). Continent tab order is Caribbean, North America,
+      EU, Europe, South America, Asia (incl. Middle East), Africa, Oceania —
+      both bars are rendered from data, so no HTML edits are needed here.
     -->
-    <div class="tabs" id="roamCountryBar">
-      <!-- Caribbean -->
-      <button class="tab-btn active" data-country="caribbean">🌴 Caribbean</button>
-      <button class="tab-btn" data-country="dominicanrepublic"><img class="flag-ic" src="https://flagcdn.com/do.svg" alt="">Dominican Republic</button>
-      <button class="tab-btn" data-country="aruba"><img class="flag-ic" src="https://flagcdn.com/aw.svg" alt="">Aruba</button>
-      <button class="tab-btn" data-country="cuba"><img class="flag-ic" src="https://flagcdn.com/cu.svg" alt="">Cuba</button>
-      <button class="tab-btn" data-country="sintmaarten"><img class="flag-ic" src="https://flagcdn.com/sx.svg" alt="">Sint Maarten</button>
-      <button class="tab-btn" data-country="belize"><img class="flag-ic" src="https://flagcdn.com/bz.svg" alt="">Belize</button>
-      <!-- North America -->
-      <button class="tab-btn" data-country="usa"><img class="flag-ic" src="https://flagcdn.com/us.svg" alt="">USA</button>
-      <button class="tab-btn" data-country="canada"><img class="flag-ic" src="https://flagcdn.com/ca.svg" alt="">Canada</button>
-      <button class="tab-btn" data-country="mexico"><img class="flag-ic" src="https://flagcdn.com/mx.svg" alt="">Mexico</button>
-      <button class="tab-btn" data-country="panama"><img class="flag-ic" src="https://flagcdn.com/pa.svg" alt="">Panama</button>
-      <!-- Europe / EU -->
-      <button class="tab-btn" data-country="eu"><img class="flag-ic" src="https://flagcdn.com/eu.svg" alt="">EU</button>
-      <button class="tab-btn" data-country="uk"><img class="flag-ic" src="https://flagcdn.com/gb.svg" alt="">UK</button>
-      <button class="tab-btn" data-country="turkiye"><img class="flag-ic" src="https://flagcdn.com/tr.svg" alt="">Türkiye</button>
-      <button class="tab-btn" data-country="russia"><img class="flag-ic" src="https://flagcdn.com/ru.svg" alt="">Russia</button>
-      <button class="tab-btn" data-country="albania"><img class="flag-ic" src="https://flagcdn.com/al.svg" alt="">Albania</button>
-      <!-- South America -->
-      <button class="tab-btn" data-country="brazil"><img class="flag-ic" src="https://flagcdn.com/br.svg" alt="">Brazil</button>
-      <button class="tab-btn" data-country="venezuela"><img class="flag-ic" src="https://flagcdn.com/ve.svg" alt="">Venezuela</button>
-      <button class="tab-btn" data-country="colombia"><img class="flag-ic" src="https://flagcdn.com/co.svg" alt="">Colombia</button>
-      <button class="tab-btn" data-country="chile"><img class="flag-ic" src="https://flagcdn.com/cl.svg" alt="">Chile</button>
-      <button class="tab-btn" data-country="argentina"><img class="flag-ic" src="https://flagcdn.com/ar.svg" alt="">Argentina</button>
-      <button class="tab-btn" data-country="peru"><img class="flag-ic" src="https://flagcdn.com/pe.svg" alt="">Peru</button>
-      <button class="tab-btn" data-country="ecuador"><img class="flag-ic" src="https://flagcdn.com/ec.svg" alt="">Ecuador</button>
-      <button class="tab-btn" data-country="uruguay"><img class="flag-ic" src="https://flagcdn.com/uy.svg" alt="">Uruguay</button>
-      <!-- Asia (incl. Middle East) -->
-      <button class="tab-btn" data-country="india"><img class="flag-ic" src="https://flagcdn.com/in.svg" alt="">India</button>
-      <button class="tab-btn" data-country="china"><img class="flag-ic" src="https://flagcdn.com/cn.svg" alt="">China</button>
-      <button class="tab-btn" data-country="qatar"><img class="flag-ic" src="https://flagcdn.com/qa.svg" alt="">Qatar</button>
-      <button class="tab-btn" data-country="uae"><img class="flag-ic" src="https://flagcdn.com/ae.svg" alt="">UAE</button>
-      <button class="tab-btn" data-country="kuwait"><img class="flag-ic" src="https://flagcdn.com/kw.svg" alt="">Kuwait</button>
-      <button class="tab-btn" data-country="philippines"><img class="flag-ic" src="https://flagcdn.com/ph.svg" alt="">Philippines</button>
-      <button class="tab-btn" data-country="singapore"><img class="flag-ic" src="https://flagcdn.com/sg.svg" alt="">Singapore</button>
-      <button class="tab-btn" data-country="malaysia"><img class="flag-ic" src="https://flagcdn.com/my.svg" alt="">Malaysia</button>
-      <button class="tab-btn" data-country="indonesia"><img class="flag-ic" src="https://flagcdn.com/id.svg" alt="">Indonesia</button>
-      <button class="tab-btn" data-country="japan"><img class="flag-ic" src="https://flagcdn.com/jp.svg" alt="">Japan</button>
-      <button class="tab-btn" data-country="southkorea"><img class="flag-ic" src="https://flagcdn.com/kr.svg" alt="">South Korea</button>
-      <!-- Africa -->
-      <button class="tab-btn" data-country="nigeria"><img class="flag-ic" src="https://flagcdn.com/ng.svg" alt="">Nigeria</button>
-      <button class="tab-btn" data-country="ghana"><img class="flag-ic" src="https://flagcdn.com/gh.svg" alt="">Ghana</button>
-      <button class="tab-btn" data-country="southafrica"><img class="flag-ic" src="https://flagcdn.com/za.svg" alt="">South Africa</button>
-      <button class="tab-btn" data-country="kenya"><img class="flag-ic" src="https://flagcdn.com/ke.svg" alt="">Kenya</button>
-      <button class="tab-btn" data-country="egypt"><img class="flag-ic" src="https://flagcdn.com/eg.svg" alt="">Egypt</button>
-      <button class="tab-btn" data-country="mauritius"><img class="flag-ic" src="https://flagcdn.com/mu.svg" alt="">Mauritius</button>
-      <!-- Oceania -->
-      <button class="tab-btn" data-country="australia"><img class="flag-ic" src="https://flagcdn.com/au.svg" alt="">Australia</button>
-      <button class="tab-btn" data-country="newzealand"><img class="flag-ic" src="https://flagcdn.com/nz.svg" alt="">New Zealand</button>
-      <button class="tab-btn" data-country="fiji"><img class="flag-ic" src="https://flagcdn.com/fj.svg" alt="">Fiji</button>
-    </div>
+    <div class="tabs" id="roamContinentBar"></div>
+    <div class="tabs" id="roamCountryBar"></div>
 
     <div class="roam-dest-heading" id="roamDestHeading"></div>
     <div class="roam-dest-note" id="roamDestNote"></div>
@@ -1064,16 +1021,21 @@ const caribbeanAssociates = [
   ["French Guiana","Orange Caraïbe and SFR Caraïbe"],
 ];
 
-// MAINTENANCE NOTE: keep entries grouped by continent — Caribbean, North
-// America, Europe/EU, South America, Asia (incl. Middle East), Africa,
-// Oceania — then roughly by popularity within each continent, to match the
-// button order above. Use "code" (ISO 3166-1 alpha-2) for the flag image;
+// MAINTENANCE NOTE: this object is the single source of truth for both the
+// continent bar and the country bar — both are rendered from it, so no HTML
+// edits are needed when adding a destination. Give each entry a "continent"
+// of one of: "Caribbean", "North America", "EU", "Europe", "South America",
+// "Asia" (incl. Middle East), "Africa", "Oceania". Keep Caribbean and EU
+// separate from North America and Europe. Within a continent, keep entries
+// roughly ordered by popularity among Guyanese travellers (an educated
+// estimate is fine). Use "code" (ISO 3166-1 alpha-2) for the flag image;
 // only the Caribbean region entry has no single flag, so it uses "flag"
-// (an emoji) instead.
+// (an emoji) instead. Add "short" for a shorter button label if the full
+// "name" is long (e.g. "USA" instead of "United States").
 const roamCountries = {
   /* ---- Caribbean ---- */
   caribbean: {
-    flag:"🌴", name:"Caribbean",
+    flag:"🌴", name:"Caribbean", continent:"Caribbean",
     provider:"FLOW, Digicel and local partners across the region", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[1500,2500,4000,6500,8500,10500],
     countryLists:[
@@ -1082,227 +1044,258 @@ const roamCountries = {
     ],
   },
   dominicanrepublic: {
-    code:"do", name:"Dominican Republic",
+    code:"do", name:"Dominican Republic", continent:"Caribbean",
     provider:"Claro, Altice", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   aruba: {
-    code:"aw", name:"Aruba",
+    code:"aw", name:"Aruba", continent:"Caribbean",
     provider:"Setar, Digicel", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   cuba: {
-    code:"cu", name:"Cuba",
+    code:"cu", name:"Cuba", continent:"Caribbean",
     provider:"ETECSA", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   sintmaarten: {
-    code:"sx", name:"Sint Maarten",
+    code:"sx", name:"Sint Maarten", continent:"Caribbean",
     provider:"FLOW", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   belize: {
-    code:"bz", name:"Belize",
+    code:"bz", name:"Belize", continent:"Caribbean",
     provider:"Digicel, Smart", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   /* ---- North America ---- */
   usa: {
-    code:"us", name:"United States",
+    code:"us", name:"United States", short:"USA", continent:"North America",
     provider:"T-Mobile, Verizon", generation:"5G roaming where available, 4G/4G+",
     note:"Includes all U.S. territories — Puerto Rico, Guam, the U.S. Virgin Islands, American Samoa and the Northern Mariana Islands.",
     data:[3,6,12,20,30,40], price:[4500,6500,9500,15500,19500,25500],
   },
   canada: {
-    code:"ca", name:"Canada",
+    code:"ca", name:"Canada", continent:"North America",
     provider:"Bell Canada", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   mexico: {
-    code:"mx", name:"Mexico",
+    code:"mx", name:"Mexico", continent:"North America",
     provider:"AT&T Mexico, Movistar", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   panama: {
-    code:"pa", name:"Panama",
+    code:"pa", name:"Panama", continent:"North America",
     provider:"+Móvil, Tigo", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[1500,2500,4000,6500,8500,10500],
   },
-  /* ---- Europe / EU ---- */
+  /* ---- EU ---- */
   eu: {
-    code:"eu", name:"European Union",
+    code:"eu", name:"European Union", short:"EU", continent:"EU",
     provider:"27 national partners — see full list below", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
     countryLists:[{title:"EU member states & network partners", list:euCountries}],
   },
+  /* ---- Europe (non-EU) ---- */
   uk: {
-    code:"gb", name:"United Kingdom",
+    code:"gb", name:"United Kingdom", short:"UK", continent:"Europe",
     provider:"EE", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[4500,6500,7500,14500,18500,22500],
   },
+  switzerland: {
+    code:"ch", name:"Switzerland", continent:"Europe",
+    provider:"Swisscom, Sunrise", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
+  norway: {
+    code:"no", name:"Norway", continent:"Europe",
+    provider:"Telenor, Telia", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
   turkiye: {
-    code:"tr", name:"Türkiye",
+    code:"tr", name:"Türkiye", continent:"Europe",
     provider:"Turkcell", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
+  iceland: {
+    code:"is", name:"Iceland", continent:"Europe",
+    provider:"Nova, Síminn", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
   russia: {
-    code:"ru", name:"Russia",
+    code:"ru", name:"Russia", continent:"Europe",
     provider:"MTS, MegaFon", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   albania: {
-    code:"al", name:"Albania",
+    code:"al", name:"Albania", continent:"Europe",
     provider:"Vodafone Albania", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   /* ---- South America ---- */
   brazil: {
-    code:"br", name:"Brazil",
+    code:"br", name:"Brazil", continent:"South America",
     provider:"Vivo, Claro Brasil", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   venezuela: {
-    code:"ve", name:"Venezuela",
+    code:"ve", name:"Venezuela", continent:"South America",
     provider:"Movistar Venezuela", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   colombia: {
-    code:"co", name:"Colombia",
+    code:"co", name:"Colombia", continent:"South America",
     provider:"Claro, Movistar", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   chile: {
-    code:"cl", name:"Chile",
+    code:"cl", name:"Chile", continent:"South America",
     provider:"Entel, Movistar", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   argentina: {
-    code:"ar", name:"Argentina",
+    code:"ar", name:"Argentina", continent:"South America",
     provider:"Personal, Claro", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   peru: {
-    code:"pe", name:"Peru",
+    code:"pe", name:"Peru", continent:"South America",
     provider:"Claro", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   ecuador: {
-    code:"ec", name:"Ecuador",
+    code:"ec", name:"Ecuador", continent:"South America",
     provider:"CNT", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   uruguay: {
-    code:"uy", name:"Uruguay",
+    code:"uy", name:"Uruguay", continent:"South America",
     provider:"Antel, Claro Uruguay", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   /* ---- Asia (incl. Middle East) ---- */
   india: {
-    code:"in", name:"India",
+    code:"in", name:"India", continent:"Asia",
     provider:"Reliance Jio, Bharti Airtel", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3000,4800,7500,12000,15500,19000],
   },
   china: {
-    code:"cn", name:"China",
+    code:"cn", name:"China", continent:"Asia",
     provider:"China Mobile", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   qatar: {
-    code:"qa", name:"Qatar",
+    code:"qa", name:"Qatar", continent:"Asia",
     provider:"Ooredoo Qatar, Vodafone Qatar", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   uae: {
-    code:"ae", name:"United Arab Emirates",
+    code:"ae", name:"United Arab Emirates", short:"UAE", continent:"Asia",
     provider:"e&, du", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   kuwait: {
-    code:"kw", name:"Kuwait",
+    code:"kw", name:"Kuwait", continent:"Asia",
     provider:"Zain Kuwait", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   philippines: {
-    code:"ph", name:"Philippines",
+    code:"ph", name:"Philippines", continent:"Asia",
     provider:"Globe Telecom, Smart Communications", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   singapore: {
-    code:"sg", name:"Singapore",
+    code:"sg", name:"Singapore", continent:"Asia",
     provider:"Singtel, StarHub", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   malaysia: {
-    code:"my", name:"Malaysia",
+    code:"my", name:"Malaysia", continent:"Asia",
     provider:"U Mobile, CelcomDigi", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   indonesia: {
-    code:"id", name:"Indonesia",
+    code:"id", name:"Indonesia", continent:"Asia",
     provider:"Telkomsel", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
+  taiwan: {
+    code:"tw", name:"Taiwan", continent:"Asia",
+    provider:"Chunghwa Telecom, Taiwan Mobile", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
+  hongkong: {
+    code:"hk", name:"Hong Kong", continent:"Asia",
+    provider:"China Mobile Hong Kong, SmarTone", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
   japan: {
-    code:"jp", name:"Japan",
+    code:"jp", name:"Japan", continent:"Asia",
     provider:"NTT Docomo", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   southkorea: {
-    code:"kr", name:"South Korea",
+    code:"kr", name:"South Korea", continent:"Asia",
     provider:"SK Telecom", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   /* ---- Africa ---- */
   nigeria: {
-    code:"ng", name:"Nigeria",
+    code:"ng", name:"Nigeria", continent:"Africa",
     provider:"MTN Nigeria, Mafab Communications", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   ghana: {
-    code:"gh", name:"Ghana",
+    code:"gh", name:"Ghana", continent:"Africa",
     provider:"MTN", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   southafrica: {
-    code:"za", name:"South Africa",
+    code:"za", name:"South Africa", continent:"Africa",
     provider:"Vodacom, MTN", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
+  morocco: {
+    code:"ma", name:"Morocco", continent:"Africa",
+    provider:"Maroc Telecom, Orange Maroc", generation:"5G roaming where available, 4G/4G+",
+    data:[3,6,12,20,30,40], price:[4500,6500,9500,14500,18500,22500],
+  },
   kenya: {
-    code:"ke", name:"Kenya",
+    code:"ke", name:"Kenya", continent:"Africa",
     provider:"Safaricom, Airtel Kenya", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   egypt: {
-    code:"eg", name:"Egypt",
+    code:"eg", name:"Egypt", continent:"Africa",
     provider:"Telecom Egypt", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   mauritius: {
-    code:"mu", name:"Mauritius",
+    code:"mu", name:"Mauritius", continent:"Africa",
     provider:"Emtel, my.t Mobile", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   /* ---- Oceania ---- */
   australia: {
-    code:"au", name:"Australia",
+    code:"au", name:"Australia", continent:"Oceania",
     provider:"Telstra, Optus", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   newzealand: {
-    code:"nz", name:"New Zealand",
+    code:"nz", name:"New Zealand", continent:"Oceania",
     provider:"One NZ", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
   fiji: {
-    code:"fj", name:"Fiji",
+    code:"fj", name:"Fiji", continent:"Oceania",
     provider:"Vodafone Fiji, Digicel Fiji", generation:"5G roaming where available, 4G/4G+",
     data:[3,6,12,20,30,40], price:[3500,5500,8500,13500,17500,21500],
   },
 };
 
 function flagImg(code){
-  return `<img class="flag-ic" src="https://flagcdn.com/${code}.svg" alt="" style="width:22px;height:16px;margin:0 8px -2px 0;">`;
+  return `<img class="flag-ic" src="https://flagcdn.com/${code}.svg" alt="">`;
 }
 
 function renderRoamTable(key){
@@ -1347,15 +1340,42 @@ function renderRoamTable(key){
     listEl.innerHTML = '';
   }
 }
-renderRoamTable('caribbean');
+const continentOrder = ["Caribbean","North America","EU","Europe","South America","Asia","Africa","Oceania"];
 
-document.querySelectorAll('#roamCountryBar .tab-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('#roamCountryBar .tab-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    renderRoamTable(btn.dataset.country);
+function renderContinentBar(){
+  const bar = document.getElementById('roamContinentBar');
+  bar.innerHTML = continentOrder.map((cont,i)=>
+    `<button class="tab-btn${i===0 ? ' active' : ''}" data-continent="${cont}">${cont}</button>`
+  ).join('');
+  bar.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      bar.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCountryBar(btn.dataset.continent);
+    });
   });
-});
+}
+
+function renderCountryBar(continent){
+  const bar = document.getElementById('roamCountryBar');
+  const entries = Object.entries(roamCountries).filter(([,c])=>c.continent===continent);
+  bar.innerHTML = entries.map(([key,c],i)=>{
+    const flagMarkup = c.code ? flagImg(c.code) : c.flag;
+    const label = c.short || c.name;
+    return `<button class="tab-btn${i===0 ? ' active' : ''}" data-country="${key}">${flagMarkup}${label}</button>`;
+  }).join('');
+  bar.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      bar.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRoamTable(btn.dataset.country);
+    });
+  });
+  if(entries.length) renderRoamTable(entries[0][0]);
+}
+
+renderContinentBar();
+renderCountryBar(continentOrder[0]);
 
 /* ============ SCROLL PROGRESS ============ */
 const progress = document.getElementById('progress');
